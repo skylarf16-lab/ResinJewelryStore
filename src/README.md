@@ -1,7 +1,7 @@
 # Resin Jewelry Store
 
 ## Description
-Resin Jewelry Store is a RESTful API built with Java and Spring Boot. It manages customers, products, and orders for an online resin jewelry shop. Customers can browse products, add them to a cart, and checkout orders. The backend follows best practices for REST APIs and persists data in a MySQL database.
+Resin Jewelry Store is a REST API built with Java and Spring Boot. It manages customers, products, and orders for an online resin jewelry shop. Customers can browse products, add them to a cart, and checkout orders. The backend follows best practices for REST APIs and persists data in a MySQL database.
 
 ---
 
@@ -144,7 +144,6 @@ Resin Jewelry Store is a RESTful API built with Java and Spring Boot. It manages
 ## Deliverables
 
 1. A fully working REST API
-2. GitHub repository URL: 
-3. Task Management App URL (e.g., Trello)
-4. Presentation Slides URL
-5. Complete README.md with class & use case diagrams
+2. GitHub repository URL: https://github.com/skylarf16-lab/ResinJewelryStore.git
+3. Security (added measures)
+4. Complete README.md with class & use case diagrams
