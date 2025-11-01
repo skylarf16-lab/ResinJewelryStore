@@ -1,0 +1,150 @@
+# Resin Jewelry Store
+
+## Description
+Resin Jewelry Store is a RESTful API built with Java and Spring Boot. It manages customers, products, and orders for an online resin jewelry shop. Customers can browse products, add them to a cart, and checkout orders. The backend follows best practices for REST APIs and persists data in a MySQL database.
+
+---
+
+## Class Diagram (Simplified)
+
+```
+             ┌────────────┐
+             │  Product   │
+             │------------│
+             │ id: Long   │
+             │ name: String │
+             │ price: double│
+             │ category: ProductCategory │
+             └────────────┘
+                   ▲
+   ┌───────────────┼───────────────┐
+   │               │               │
+┌─────────┐   ┌─────────┐   ┌─────────┐
+│Necklace │   │Ring     │   │Bracelet │
+└─────────┘   └─────────┘   └─────────┘
+                   │
+                 Earrings
+
+┌──────────────┐      ┌──────────────┐
+│  Customer    │      │    Order     │
+│--------------│      │--------------│
+│ id: Long     │      │ id: Long     │
+│ name: String │      │ customer: Customer │
+│ email: String│      │ products: List<Product> │
+│ cart: List<Product>│ │ totalAmount: Double │
+└──────────────┘      │ status: OrderStatus │
+                      │ orderDate: LocalDateTime │
+                      └──────────────┘
+```
+
+---
+
+## Use Case Diagram (Simplified)
+
+```
+          +-----------------------+
+          |      Customer         |
+          +-----------------------+
+                 |         ^
+                 |         |
+                 v         |
+      +------------------+ |
+      | Browse Products   | |
+      +------------------+ |
+                 |         |
+                 v         |
+      +------------------+ |
+      | Add to Cart       | |
+      +------------------+ |
+                 |         |
+                 v         |
+      +------------------+ |
+      | Remove from Cart  | |
+      +------------------+ |
+                 |         |
+                 v         |
+      +------------------+ |
+      | Checkout Cart     | |
+      +------------------+ |
+                 | 
+                 v
+           +----------------+
+           |   Order Placed |
+           +----------------+
+```
+
+
+
+
+
+## Technologies Used
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- MySQL
+- Spring Security (Bearer Authentication)
+- Maven
+
+---
+
+## Controllers and Routes
+
+### Products
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | /api/products | List all products |
+| GET | /api/products/{id} | Get product by ID |
+| POST | /api/products | Add new product |
+| PUT | /api/products/{id} | Update product |
+| DELETE | /api/products/{id} | Delete product |
+
+### Customers
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | /api/customers | List all customers |
+| GET | /api/customers/{id} | Get customer by ID |
+| POST | /api/customers | Add new customer |
+| PUT | /api/customers/{id} | Update customer |
+| DELETE | /api/customers/{id} | Delete customer |
+
+### Orders
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | /api/orders | List all orders |
+| GET | /api/orders/{id} | Get order by ID |
+| POST | /api/orders | Create new order |
+| PUT | /api/orders/{id} | Update order |
+| DELETE | /api/orders/{id} | Delete order |
+
+### Cart
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | /api/carts/{customerId} | View customer cart |
+| POST | /api/carts/{customerId}/add/{productId} | Add product to cart |
+| POST | /api/carts/{customerId}/remove/{productId} | Remove product from cart |
+| POST | /api/carts/{customerId}/checkout | Checkout cart and place order |
+
+---
+
+## Future Work
+
+- Add payment gateway integration
+- Add product reviews and ratings
+- Improve frontend integration (React or Angular)
+
+---
+
+## Team Members
+
+- Skylar Freeland
+
+---
+
+## Deliverables
+
+1. A fully working REST API
+2. GitHub repository URL: 
+3. Task Management App URL (e.g., Trello)
+4. Presentation Slides URL
+5. Complete README.md with class & use case diagrams
