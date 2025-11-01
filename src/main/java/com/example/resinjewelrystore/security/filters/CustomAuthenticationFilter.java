@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.security.config.Elements.JWT;
+import com.auth0.jwt.JWT;
 
 @Slf4j // (Simple Logging Facade for Java) offers logging API which is more professional that simply sout
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
