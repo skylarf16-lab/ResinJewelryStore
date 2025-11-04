@@ -5,7 +5,7 @@ Resin Jewelry Store is a REST API built with Java and Spring Boot. It manages cu
 
 ---
 
-## Class Diagram (Simplified)
+## Class Diagram 
 
 ```
              ┌────────────┐
@@ -39,7 +39,7 @@ Resin Jewelry Store is a REST API built with Java and Spring Boot. It manages cu
 
 ---
 
-## Use Case Diagram (Simplified)
+## Use Case Diagram 
 
 ```
           +-----------------------+
