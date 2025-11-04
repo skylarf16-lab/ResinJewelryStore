@@ -1,7 +1,9 @@
 package com.example.resinjewelrystore.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Product {
