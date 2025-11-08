@@ -1,50 +1,49 @@
 package com.example.resinjewelrystore.service;
 
-import com.example.resinjewelrystore.model.*;
+import com.example.resinjewelrystore.model.Product;
 import com.example.resinjewelrystore.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    public List<Product> getAllProducts() { return productRepository.findAll(); }
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
-    public Product createProduct(Product product) { return productRepository.save(product); }
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 
-    @PostConstruct
-    public void initSampleProducts() {
-        if (productRepository.count() == 0) {
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    }
 
-            ResinNecklace necklace = new ResinNecklace();
-            necklace.setName("Ocean Blue Necklace");
-            necklace.setMaterial("Resin");
-            necklace.setPrice(35.0);
-            productRepository.save(necklace);
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
+    }
 
-            ResinRing ring = new ResinRing();
-            ring.setName("Golden Glitter Ring");
-            ring.setMaterial("Resin");
-            ring.setPrice(25.0);
-            productRepository.save(ring);
+    public Product updateProduct(Long id, Product updatedProduct) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
 
-            ResinBracelet bracelet = new ResinBracelet();
-            bracelet.setName("Sunset Pink Bracelet");
-            bracelet.setMaterial("Resin");
-            bracelet.setPrice(30.0);
-            productRepository.save(bracelet);
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setMaterial(updatedProduct.getMaterial());
+        existingProduct.setPrice(updatedProduct.getPrice());
 
-            ResinEarrings earrings = new ResinEarrings();
-            earrings.setName("Silver Sparkle Earrings");
-            earrings.setMaterial("Resin");
-            earrings.setPrice(28.0);
-            productRepository.save(earrings);
+        return productRepository.save(existingProduct);
+    }
+
+    public boolean deleteProduct(Long id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

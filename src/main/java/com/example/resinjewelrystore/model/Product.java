@@ -1,9 +1,16 @@
 package com.example.resinjewelrystore.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ResinRing.class, name = "Ring"),
+        @JsonSubTypes.Type(value = ResinNecklace.class, name = "Necklace"),
+        @JsonSubTypes.Type(value = ResinBracelet.class, name = "Bracelet"),
+        @JsonSubTypes.Type(value = ResinEarrings.class, name = "Earrings")
+})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Product {
@@ -16,7 +23,7 @@ public abstract class Product {
     private String material;
     private Double price;
 
-    // --- Getters and Setters ---
+    // Getters and Setters
     public Long getId() { return id; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

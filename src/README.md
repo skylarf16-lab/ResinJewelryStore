@@ -145,5 +145,7 @@ Resin Jewelry Store is a REST API built with Java and Spring Boot. It manages cu
 
 1. A fully working REST API
 2. GitHub repository URL: https://github.com/skylarf16-lab/ResinJewelryStore.git
-3. Security (added measures)
-4. Complete README.md with class & use case diagrams
+3. Slides URL: https://docs.google.com/presentation/d/1YhMstdvpgyq02zw5Yvc6-YqBUu9I7JRYcpmfmvgfhes/edit?usp=sharing
+4. Task Management App URl: https://trello.com/invite/b/690df8b9c71860600b4458bd/ATTIa6893a750003ac8c67f0332d2b0ff8a13FF3F11D/my-trello-board
+5. Security (added measures)
+6. Complete README.md with class & use case diagrams

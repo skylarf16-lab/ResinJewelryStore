@@ -5,6 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-
-    boolean existsByCustomerEmail(String email);
+    boolean existsByCustomer_Email(String email);
 }

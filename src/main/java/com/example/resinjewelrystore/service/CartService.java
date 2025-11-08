@@ -29,54 +29,47 @@ public class CartService {
         this.orderRepository = orderRepository;
     }
 
-    // Get customer's cart (temporary list of products)
     public List<Product> getCart(Long customerId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow();
-        return customer.getCart() != null ? customer.getCart() : new ArrayList<>();
+        return customer.getCart();
     }
 
-    // Add product to cart
     public List<Product> addToCart(Long customerId, Long productId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow();
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException(productId));
-        List<Product> cart = customer.getCart() != null ? customer.getCart() : new ArrayList<>();
-        cart.add(product);
-        customer.setCart(cart);
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        customer.addToCart(product);
         customerRepository.save(customer);
-        return cart;
+        return customer.getCart();
     }
 
-    // Remove product from cart
     public List<Product> removeFromCart(Long customerId, Long productId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow();
-        List<Product> cart = customer.getCart() != null ? customer.getCart() : new ArrayList<>();
-        cart.removeIf(p -> p.getId().equals(productId));
-        customer.setCart(cart);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        customer.removeFromCart(product);
         customerRepository.save(customer);
-        return cart;
+        return customer.getCart();
     }
 
-    // Checkout cart
     public Order checkout(Long customerId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow();
         List<Product> cart = customer.getCart();
-        if (cart == null || cart.isEmpty()) throw new RuntimeException("Cart is empty");
+        if (cart.isEmpty()) throw new RuntimeException("Cart is empty");
 
         double total = cart.stream().mapToDouble(Product::getPrice).sum();
-
         Order order = new Order();
         order.setCustomer(customer);
         order.setProducts(new ArrayList<>(cart));
         order.setTotalAmount(total);
         order.setStatus(OrderStatus.PENDING);
         order.setOrderDate(LocalDateTime.now());
-        Order savedOrder = orderRepository.save(order);
 
-        // Clear the cart
+        orderRepository.save(order);
+
         customer.setCart(new ArrayList<>());
         customerRepository.save(customer);
 
-        return savedOrder;
+        return order;
     }
 }

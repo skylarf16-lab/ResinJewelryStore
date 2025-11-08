@@ -15,12 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -41,38 +35,30 @@ public class SecurityConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(requests -> requests
-                        // Public endpoints
-                        .requestMatchers("/api/login/**").permitAll()
-                        .requestMatchers(GET, "/api/products/**").permitAll() // anyone can view products
+                                // ===== TEMPORARY: ALLOW ALL REQUESTS =====
+                                .anyRequest().permitAll()
 
-                        // Cart endpoints - must be logged in
-                        .requestMatchers("/api/carts/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-
-                        // Customer endpoints - must be logged in
-                        .requestMatchers("/api/customers/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-
-                        // Orders
-                        .requestMatchers(GET, "/api/orders/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers(POST, "/api/orders").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN") // checkout
-                        .requestMatchers(PUT, "/api/orders/**").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(DELETE, "/api/orders/**").hasAnyAuthority("ROLE_ADMIN")
-
-                        // User & role management
-                        .requestMatchers(GET, "/api/users").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers(POST, "/api/users").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(POST, "/api/roles").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(POST, "/api/roles/add-to-user").hasAnyAuthority("ROLE_ADMIN")
-
-                        // Any other requests need authentication
-                        .anyRequest().authenticated()
+                        // ===== ORIGINAL ROLE-BASED SECURITY =====
+                        // .requestMatchers("/api/login/**").permitAll()
+                        // .requestMatchers(GET, "/api/products/**").permitAll()
+                        // .requestMatchers("/api/carts/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        // .requestMatchers("/api/customers/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        // .requestMatchers(GET, "/api/orders/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        // .requestMatchers(POST, "/api/orders").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        // .requestMatchers(PUT, "/api/orders/**").hasAnyAuthority("ROLE_ADMIN")
+                        // .requestMatchers(DELETE, "/api/orders/**").hasAnyAuthority("ROLE_ADMIN")
+                        // .requestMatchers(GET, "/api/users").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        // .requestMatchers(POST, "/api/users").hasAnyAuthority("ROLE_ADMIN")
+                        // .requestMatchers(POST, "/api/roles").hasAnyAuthority("ROLE_ADMIN")
+                        // .requestMatchers(POST, "/api/roles/add-to-user").hasAnyAuthority("ROLE_ADMIN")
+                        // .anyRequest().authenticated()
                 );
 
-        http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        // Comment filters temporarily
+        // http.addFilter(customAuthenticationFilter);
+        // http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

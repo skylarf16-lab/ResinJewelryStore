@@ -22,15 +22,15 @@ public class DataLoader implements CommandLineRunner {
         roleService.save(new Role("ROLE_USER"));
         roleService.save(new Role("ROLE_ADMIN"));
 
-        userService.UserService(new User("John Doe", "john", "1234"));
-        userService.UserService(new User("James Smith", "james", "1234"));
-        userService.UserService(new User("Jane Carry", "jane", "1234"));
-        userService.UserService(new User("Chris Anderson", "chris", "1234"));
+        userService.UserService(new User("Ashley Johnson", "ashley", "1234"));
+        userService.UserService(new User("Chris Smith", "chris", "1234"));
+        userService.UserService(new User("Jackie Carry", "jackie", "1234"));
+        userService.UserService(new User("Sarah Anderson", "sarah", "1234"));
 
-        roleService.addRoleToUser("john", "ROLE_USER");
-        roleService.addRoleToUser("james", "ROLE_ADMIN");
-        roleService.addRoleToUser("jane", "ROLE_USER");
+        roleService.addRoleToUser("ashley", "ROLE_USER");
         roleService.addRoleToUser("chris", "ROLE_ADMIN");
+        roleService.addRoleToUser("jackie", "ROLE_USER");
+        roleService.addRoleToUser("sarah", "ROLE_ADMIN");
         roleService.addRoleToUser("chris", "ROLE_USER");
     }
 }

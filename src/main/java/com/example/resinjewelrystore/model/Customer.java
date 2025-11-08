@@ -15,8 +15,7 @@ public class Customer {
     private String name;
     private String email;
 
-    // Customer's cart mapped to a join table
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "customer_cart",
             joinColumns = @JoinColumn(name = "customer_id"),
@@ -24,19 +23,26 @@ public class Customer {
     )
     private List<Product> cart = new ArrayList<>();
 
-
     public Long getId() { return id; }
     public String getName() { return name; }
-    public String getEmail() { return email; }
-    public List<Product> getCart() { return cart; }
-
-
     public void setName(String name) { this.name = name; }
+    public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public List<Product> getCart() { return cart; }
     public void setCart(List<Product> cart) { this.cart = cart; }
 
+    public void addToCart(Product product) {
+        if (!cart.contains(product)) {
+            cart.add(product);
+        }
+    }
 
-    public void addToCart(Product product) { cart.add(product); }
-    public void removeFromCart(Product product) { cart.remove(product); }
+    public void removeFromCart(Product product) {
+        cart.remove(product);
+    }
 
+    public void clearCart() {
+        cart.clear();
+    }
 }
